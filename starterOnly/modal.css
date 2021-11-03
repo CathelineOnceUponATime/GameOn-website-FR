@@ -67,6 +67,10 @@ img {
 .topnav .icon {
   display: none;
 }
+.erreur{
+  padding-top: 10px;
+  color: red;
+}
 
 @media screen and (max-width: 768px) {
   .topnav a {display: none;}
