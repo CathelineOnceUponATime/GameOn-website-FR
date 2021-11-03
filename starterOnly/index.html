@@ -64,42 +64,45 @@
             >
               <div
                 class="formData">
-                <label>Prénom</label><br>
+                <label for="idPrenom">Prénom</label><br>
                 <input
                   class="text-control"
                   type="text"
-                  id="first"
+                  id="idPrenom"
                   name="first"
                   minlength="2"
                 /><br>
               </div>
               <div
                 class="formData">
-                <label>Nom</label><br>
+                <label for="idNom">Nom</label><br>
                 <input
                   class="text-control"
                   type="text"
-                  id="last"
+                  id="idNom"
                   name="last"
+                  minlength="2"
                 /><br>
               </div>
               <div
                 class="formData">
-                <label>E-mail</label><br>
+                <label for="idEmail">E-mail</label><br>
                 <input
                   class="text-control"
                   type="email"
-                  id="email"
+                  id="idEmail"
                   name="email"
                 /><br>
               </div>
               <div
                 class="formData">
-                <label>Date de naissance</label><br>
+                <label for="idDate">Date de naissance</label><br>
                 <input
                   class="text-control"
                   type="date"
-                  id="birthdate"
+                  step="1"
+                  min="1900-01-01"
+                  id="idDate"
                   name="birthdate"
                 /><br>
               </div>
@@ -195,7 +198,7 @@
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>
-                  Je Je souhaite être prévenu des prochains évènements.
+                  Je souhaite être prévenu des prochains évènements.
                 </label>
                 <br>
               </div>
