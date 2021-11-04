@@ -49,6 +49,7 @@ let eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le
 let eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur')
 let eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur')
 let eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur')
+
 tErreurs.push(ePrenom)
 tErreurs.push(eNom)
 tErreurs.push(eMail)
@@ -84,52 +85,58 @@ function fermeErreur (id, checkbox = false) {
   }
 }
 
-function verificationFormulaire () {
-  const prenom = document.getElementById('idPrenom').value
-  const nom = document.getElementById('idNom').value
-  const email = document.getElementById('idEmail').value
-  const date = document.getElementById('idDate').value
-  const tournois = document.getElementById('idTournois').value
-  const conditions = document.getElementById('checkbox1').checked
+function verificationChamp (idChamp, contenuChamp) {
+  if (contenuChamp === '' || contenuChamp.length < 2) {
+    for (let i = 0; i < tErreurs.length; i++) {
+      if (tErreurs[i].id === idChamp && !tErreurs[i].presenceErreur) {
+        tErreurs[i].presenceErreur = true
+        montreErreur(tErreurs[i])
+        break
+      }
+    }
+  } else {
+    for (let i = 0; i < tErreurs.length; i++) {
+      if (tErreurs[i].id === idChamp && tErreurs[i].presenceErreur) {
+        tErreurs[i].presenceErreur = false
+        fermeErreur(tErreurs[i].id)
+        break
+      }
+    }
+  }
+}
 
+function presenceErreurChamp () {
   let bErreur = false
-
-  if (prenom === '' || prenom.length < 2) {
-    let pos = tErreurs.indexOf('ePrenom')
-    montreErreur(ePrenom)
-    bErreur = true
-  } else if (ePrenom.presenceErreur) {
-    fermeErreur('idPrenom')
+  for (let i = 0; i < tErreurs.length; i++) {
+    if (tErreurs[i].presenceErreur && !bErreur) {
+      bErreur = true
+      break
+    }
   }
+  return bErreur
+}
 
-  if (nom === '' || nom.length < 2) {
-    montreErreur('idNom', 'Merci de saisir minimum deux caractères pour le nom')
-    bErreur = true
-  } else {
-    fermeErreur('idNom')
-  }
-
-  if (email === '' || email.length < 2) {
-    montreErreur('idEmail', 'Merci de saisir une adresse e-mail valide')
-    bErreur = true
-  } else {
-    fermeErreur('idEmail')
-  }
-
-  if (date === '') {
-    montreErreur('idDate', 'Merci de saisir une date de naissance')
-    bErreur = true
-  } else {
-    fermeErreur('idDate')
-  }
-
-  if (!conditions) {
+function verificationFormulaire () {
+  const prenom = document.getElementById('idPrenom')
+  const nom = document.getElementById('idNom')
+  const email = document.getElementById('idEmail')
+  const date = document.getElementById('idDate')
+  const tournois = document.getElementById('idTournois')
+  const conditions = document.getElementById('checkbox1').checked
+  
+  verificationChamp(prenom.id, prenom.value)
+  verificationChamp(nom.id, nom.value)
+  verificationChamp(email.id, email.value)
+  verificationChamp(date.id, date.value)
+  
+  /*if (!conditions) {
     montreErreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', true)
-    bErreur = true
   } else {
     fermeErreur('idCheckboxConditions', true)
-  }
-  return !bErreur
+  }*/
+
+  return !presenceErreurChamp()
+  
 }
 
 // launch modal form
