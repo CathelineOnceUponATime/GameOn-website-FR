@@ -36,19 +36,20 @@ modalBtn.forEach((btn) => btn.addEventListener('click', launchModal))
 btnClose[0].addEventListener('click', closeModal)
 
 class Erreur {
-  constructor (id, message, presenceErreur, idErreur) {
+  constructor (id, message, presenceErreur, idErreur, typeErreur) {
     this.id = id
     this.message = message
     this.presenceErreur = presenceErreur
     this.idErreur = idErreur
+    this.typeErreur = typeErreur
   }
 }
 let tErreurs = []
-let ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur')
-let eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur')
-let eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur')
-let eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur')
-let eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur')
+let ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur', 'saisie')
+let eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur', 'saisie')
+let eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
+let eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
+let eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
 
 tErreurs.push(ePrenom)
 tErreurs.push(eNom)
@@ -56,7 +57,7 @@ tErreurs.push(eMail)
 tErreurs.push(eDate)
 tErreurs.push(eConditions)
 
-function montreErreur (eErreur, checkbox = false) {
+function montreErreur (eErreur) {
   const elt = document.getElementById(eErreur.id)
   const eltParent = elt.parentElement
   const erreur = document.createElement('label')
@@ -66,19 +67,17 @@ function montreErreur (eErreur, checkbox = false) {
   erreur.id = eErreur.idErreur
   eltParent.appendChild(erreur)
 
-  if (checkbox) {
+  if (eErreur.typeErreur === 'checkbox') {
     elt.style.backgroundColor = 'red'
-  } else {
-    
   }
 }
-function fermeErreur (id, checkbox = false) {
-  const elt = document.getElementById(id)
+function fermeErreur (eErreur) {
+  const elt = document.getElementById(eErreur.id)
   const eltParent = elt.parentElement
-  const erreur = document.getElementById(id + 'Erreur')
+  const erreur = document.getElementById(eErreur.idErreur)
   eltParent.removeChild(erreur)
 
-  if (checkbox) {
+  if (eErreur.typeErreur === 'checkbox') {
     elt.style.backgroundColor = '#279e7a'
   } else {
     elt.style.border = '0.8px solid #ccc'
@@ -86,24 +85,45 @@ function fermeErreur (id, checkbox = false) {
 }
 
 function verificationChamp (idChamp, contenuChamp) {
-  if (contenuChamp === '' || contenuChamp.length < 2) {
-    for (let i = 0; i < tErreurs.length; i++) {
+  let bErreur = false
+  for (let i = 0; i < tErreurs.length; i++) {
+    switch (tErreurs[i].typeErreur) {
+      case 'saisie' :
+        if (contenuChamp === '' || contenuChamp.length < 2) {
+          bErreur = true
+        }
+        break
+          
+      case 'email' :
+
+      break
+
+      case 'date' :
+        let dateValide = Date.parse(contenuChamp)
+        if (isNaN(dateValide)) {
+          bErreur = true
+        }
+        break
+
+      case 'checkbox' :
+        break
+    }
+    if (bErreur) {
       if (tErreurs[i].id === idChamp && !tErreurs[i].presenceErreur) {
         tErreurs[i].presenceErreur = true
         montreErreur(tErreurs[i])
         break
       }
-    }
-  } else {
-    for (let i = 0; i < tErreurs.length; i++) {
+    } else {
       if (tErreurs[i].id === idChamp && tErreurs[i].presenceErreur) {
         tErreurs[i].presenceErreur = false
-        fermeErreur(tErreurs[i].id)
+        fermeErreur(tErreurs[i])
         break
       }
     }
   }
 }
+
 
 function presenceErreurChamp () {
   let bErreur = false
