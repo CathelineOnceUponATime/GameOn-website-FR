@@ -50,12 +50,14 @@ let eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le
 let eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
 let eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
 let eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
+let eLocations = new Erreur('location6', 'Merci de choisir une ville', false, 'idLocationErreur', 'location')
 
 tErreurs.push(ePrenom)
 tErreurs.push(eNom)
 tErreurs.push(eMail)
 tErreurs.push(eDate)
 tErreurs.push(eConditions)
+tErreurs.push(eLocations)
 
 function montreErreur (eErreur) {
   const elt = document.getElementById(eErreur.id)
@@ -63,12 +65,11 @@ function montreErreur (eErreur) {
   const erreur = document.createElement('label')
   erreur.classList.add('erreur')
   erreur.innerHTML = eErreur.message
-  elt.style.border = '3px solid red'
   erreur.id = eErreur.idErreur
   eltParent.appendChild(erreur)
 
-  if (eErreur.typeErreur === 'checkbox') {
-    elt.style.backgroundColor = 'red'
+  if (eErreur.typeErreur !== 'checkbox') {
+    elt.style.border = '3px solid red'
   }
 }
 function fermeErreur (eErreur) {
@@ -77,48 +78,62 @@ function fermeErreur (eErreur) {
   const erreur = document.getElementById(eErreur.idErreur)
   eltParent.removeChild(erreur)
 
-  if (eErreur.typeErreur === 'checkbox') {
-    elt.style.backgroundColor = '#279e7a'
-  } else {
+  if (eErreur.typeErreur !== 'checkbox') {
     elt.style.border = '0.8px solid #ccc'
   }
 }
 
-function verificationChamp (idChamp, contenuChamp) {
+function verificationChamp (idChamp, contenuChamp = '') {
   let bErreur = false
   for (let i = 0; i < tErreurs.length; i++) {
-    switch (tErreurs[i].typeErreur) {
-      case 'saisie' :
-        if (contenuChamp === '' || contenuChamp.length < 2) {
-          bErreur = true
-        }
-        break
-          
-      case 'email' :
+    if (tErreurs[i].id === idChamp) {
+      switch (tErreurs[i].typeErreur) {
+        case 'saisie' :
+          if (contenuChamp === '' || contenuChamp.length < 2) {
+            bErreur = true
+          }
+          break
+            
+        case 'email' :
 
-      break
-
-      case 'date' :
-        let dateValide = Date.parse(contenuChamp)
-        if (isNaN(dateValide)) {
-          bErreur = true
-        }
         break
 
-      case 'checkbox' :
-        break
-    }
-    if (bErreur) {
-      if (tErreurs[i].id === idChamp && !tErreurs[i].presenceErreur) {
-        tErreurs[i].presenceErreur = true
-        montreErreur(tErreurs[i])
-        break
+        case 'date' :
+          let dateValide = Date.parse(contenuChamp)
+          if (isNaN(dateValide)) {
+            bErreur = true
+          }
+          break
+
+        case 'checkbox' :
+          if (!document.getElementById(idChamp).checked) {
+            bErreur = true
+          }
+          break
+        case 'location' :
+          const eLocations = document.getElementsByName('location')
+          let bCoche = false
+          for (let j = 0; j < eLocations.length; j++) {
+            if (eLocations[j].checked) {
+              bCoche = true
+              break
+            }
+          }
+          bErreur = !bCoche
+          break
       }
-    } else {
-      if (tErreurs[i].id === idChamp && tErreurs[i].presenceErreur) {
-        tErreurs[i].presenceErreur = false
-        fermeErreur(tErreurs[i])
-        break
+      if (bErreur) {
+        if (!tErreurs[i].presenceErreur) {
+          tErreurs[i].presenceErreur = true
+          montreErreur(tErreurs[i])
+          break
+        }
+      } else {
+        if (tErreurs[i].presenceErreur) {
+          tErreurs[i].presenceErreur = false
+          fermeErreur(tErreurs[i])
+          break
+        }
       }
     }
   }
@@ -141,19 +156,14 @@ function verificationFormulaire () {
   const nom = document.getElementById('idNom')
   const email = document.getElementById('idEmail')
   const date = document.getElementById('idDate')
-  const tournois = document.getElementById('idTournois')
-  const conditions = document.getElementById('checkbox1').checked
+  const conditions = document.getElementById('idCheckboxConditions')
   
   verificationChamp(prenom.id, prenom.value)
   verificationChamp(nom.id, nom.value)
   verificationChamp(email.id, email.value)
   verificationChamp(date.id, date.value)
-  
-  /*if (!conditions) {
-    montreErreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', true)
-  } else {
-    fermeErreur('idCheckboxConditions', true)
-  }*/
+  verificationChamp(conditions.id)
+  verificationChamp('location6')
 
   return !presenceErreurChamp()
   
