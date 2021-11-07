@@ -21,6 +21,11 @@ body {
   margin: 0 auto;
 }
 
+#logo{
+  width: auto;
+  height: auto;
+}
+
 p {
   margin-bottom: 0;
   padding: 0.5vw;
@@ -67,9 +72,18 @@ img {
 .topnav .icon {
   display: none;
 }
+
 .erreur{
   padding-top: 10px;
   color: red;
+}
+
+#idFormReserve{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 768px) {
@@ -188,8 +202,13 @@ main {
 }
 
 .modal-body {
-  padding: 15px 8%;
-  margin: 15px auto;
+  padding: 5px 8%;
+  margin: 33px auto;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 label {

@@ -30,6 +30,7 @@ const modalbg = document.querySelector('.bground')
 const modalBtn = document.querySelectorAll('.modal-btn')
 const formData = document.querySelectorAll('.formData')
 const btnClose = document.getElementsByClassName('close')
+const modalBody = document.getElementsByClassName('modal-body')
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener('click', launchModal))
@@ -44,13 +45,13 @@ class Erreur {
     this.typeErreur = typeErreur
   }
 }
-let tErreurs = []
-let ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur', 'saisie')
-let eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur', 'saisie')
-let eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
-let eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
-let eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
-let eLocations = new Erreur('location6', 'Merci de choisir une ville', false, 'idLocationErreur', 'location')
+const tErreurs = []
+const ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur', 'saisie')
+const eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur', 'saisie')
+const eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
+const eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
+const eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
+const eLocations = new Erreur('location6', 'Merci de choisir une ville', false, 'idLocationErreur', 'location')
 
 tErreurs.push(ePrenom)
 tErreurs.push(eNom)
@@ -93,10 +94,23 @@ function verificationChamp (idChamp, contenuChamp = '') {
             bErreur = true
           }
           break
-            
-        case 'email' :
 
-        break
+        case 'email' :
+          let bValide = false
+          for (let j = 0; j < (contenuChamp.length); j++) {
+            if (contenuChamp.charAt(j) === '@') {
+              if (j < (contenuChamp.length - 4)) {
+                for (let k = j; k < (contenuChamp.length - 2); k++) {
+                  if (contenuChamp.charAt(k) === '.') {
+                    bValide = true
+                    break
+                  }
+                }
+              }
+            }
+          }
+          bErreur = !bValide
+          break
 
         case 'date' :
           let dateValide = Date.parse(contenuChamp)
@@ -139,7 +153,6 @@ function verificationChamp (idChamp, contenuChamp = '') {
   }
 }
 
-
 function presenceErreurChamp () {
   let bErreur = false
   for (let i = 0; i < tErreurs.length; i++) {
@@ -157,7 +170,7 @@ function verificationFormulaire () {
   const email = document.getElementById('idEmail')
   const date = document.getElementById('idDate')
   const conditions = document.getElementById('idCheckboxConditions')
-  
+
   verificationChamp(prenom.id, prenom.value)
   verificationChamp(nom.id, nom.value)
   verificationChamp(email.id, email.value)
@@ -165,16 +178,39 @@ function verificationFormulaire () {
   verificationChamp(conditions.id)
   verificationChamp('location6')
 
-  return !presenceErreurChamp()
-  
+  if (presenceErreurChamp()) {
+    return false
+  } else {
+    afficheMessageConfirmation()
+  }
 }
 
 // launch modal form
 function launchModal () {
+  
   modalbg.style.display = 'block'
 }
 
 // close modal form
 function closeModal () {
-  modalbg.style.display = 'none'
+  window.location.reload()
+}
+
+function afficheMessageConfirmation () {
+  const eForm = document.getElementById('idFormReserve')
+  const eltParent = eForm.parentElement
+  // Suppression du formulaire reserve
+  eltParent.removeChild(eForm)
+
+  // Création de l'élément p pour le message de confirmation d'envoi
+  const eMessageConfirmation = document.createElement('p')
+  eMessageConfirmation.innerHTML = 'Merci ! Votre réservation a été reçue.'
+  eltParent.appendChild(eMessageConfirmation)
+
+  // Création du bouton fermer qui permet de fermer le formulaire
+  const eBoutonFermer = document.createElement('button')
+  eBoutonFermer.classList.add('btn-submit')
+  eBoutonFermer.classList.add('btn-close')
+  eBoutonFermer.innerHTML = 'Fermer'
+  eltParent.appendChild(eBoutonFermer)
 }
