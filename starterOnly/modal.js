@@ -1,4 +1,40 @@
-function editNav () {
+/* Classe Erreur prenant en paramètres :
+id : chaine de caractères correspondant à l'id CSS du champ
+message : chaine de caractères correspondant au message d'erreur personnalisé du champ
+presenceErreur : booléen à faux par défaut correspondant à la présence ou non d'une erreur sur le champ
+idErreur : chaine de caractères correspondant au label créer pour afficher le message d'erreur
+typeErreur : chaine de caractères parmis 5 choix : saisie, email, date, checkbox et location
+*/
+class Erreur {
+  constructor (id, message, presenceErreur, idErreur, typeErreur) {
+    this.id = id
+    this.message = message
+    this.presenceErreur = presenceErreur
+    this.idErreur = idErreur
+    this.typeErreur = typeErreur
+  }
+}
+
+// tableau comprenant les erreurs
+const tErreurs = []
+
+// Nouvel objet pour chaque erreur
+const ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur', 'saisie')
+const eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur', 'saisie')
+const eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
+const eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
+const eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
+const eLocations = new Erreur('location6', 'Merci de choisir une ville', false, 'idLocationErreur', 'location')
+
+// remplissage du tableau avec chaque erreur
+tErreurs.push(ePrenom)
+tErreurs.push(eNom)
+tErreurs.push(eMail)
+tErreurs.push(eDate)
+tErreurs.push(eConditions)
+tErreurs.push(eLocations)
+
+function editNav () { // eslint-disable-line no-unused-vars
   const x = document.getElementById('myTopnav')
   if (x.className === 'topnav') {
     x.className += ' responsive'
@@ -7,6 +43,22 @@ function editNav () {
   }
 }
 
+const titre = document.getElementsByTagName('h1')
+
+function redimensionnement () {
+  if ((window.matchMedia('(min-width : 800px)').matches) && (window.matchMedia('(max-width : 1020px)').matches)) {
+    titre[0].innerHTML = 'Marathon <br> national <br> de jeux vidéos'
+  } else {
+    titre[0].innerHTML = 'Marathon national <br> de jeux vidéos'
+  }
+}
+
+window.addEventListener('resize', redimensionnement, false)
+
+redimensionnement()
+
+// Fonction permettant de griser le calendrier
+// à toute date supérieure à la date du jour dans le champ date de naissance
 function mettreDateDuJour () {
   let dDate = new Date()
   let dJour = dDate.getDate()
@@ -28,38 +80,17 @@ mettreDateDuJour()
 // DOM Elements
 const modalbg = document.querySelector('.bground')
 const modalBtn = document.querySelectorAll('.modal-btn')
-const formData = document.querySelectorAll('.formData')
-const btnClose = document.getElementsByClassName('close')
-const modalBody = document.getElementsByClassName('modal-body')
+const formData = document.querySelectorAll('.formData') // eslint-disable-line no-unused-vars
+const close = document.getElementsByClassName('close')
+const btnClose = document.getElementsByClassName('btn-close')
+const modalBody = document.getElementsByClassName('modal-body') // eslint-disable-line no-unused-vars
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener('click', launchModal))
-btnClose[0].addEventListener('click', closeModal)
+close[0].addEventListener('click', closeModal)
 
-class Erreur {
-  constructor (id, message, presenceErreur, idErreur, typeErreur) {
-    this.id = id
-    this.message = message
-    this.presenceErreur = presenceErreur
-    this.idErreur = idErreur
-    this.typeErreur = typeErreur
-  }
-}
-const tErreurs = []
-const ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur', 'saisie')
-const eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur', 'saisie')
-const eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
-const eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
-const eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
-const eLocations = new Erreur('location6', 'Merci de choisir une ville', false, 'idLocationErreur', 'location')
-
-tErreurs.push(ePrenom)
-tErreurs.push(eNom)
-tErreurs.push(eMail)
-tErreurs.push(eDate)
-tErreurs.push(eConditions)
-tErreurs.push(eLocations)
-
+// Fonction permettant de créer dans le DOM
+// un label contenant le message d'erreur
 function montreErreur (eErreur) {
   const elt = document.getElementById(eErreur.id)
   const eltParent = elt.parentElement
@@ -73,6 +104,9 @@ function montreErreur (eErreur) {
     elt.style.border = '3px solid red'
   }
 }
+
+// Fonction permettant de supprimer du DOM
+// le label créé auparavant
 function fermeErreur (eErreur) {
   const elt = document.getElementById(eErreur.id)
   const eltParent = elt.parentElement
@@ -84,6 +118,8 @@ function fermeErreur (eErreur) {
   }
 }
 
+// Fonction qui vérifie selon le type de champ
+// l'erreur correspondante
 function verificationChamp (idChamp, contenuChamp = '') {
   let bErreur = false
   for (let i = 0; i < tErreurs.length; i++) {
@@ -95,12 +131,15 @@ function verificationChamp (idChamp, contenuChamp = '') {
           }
           break
 
-        case 'email' :
+        case 'email' : {
           let bValide = false
+          // boucle permettant de parcourir chaque caractère de l'email
           for (let j = 0; j < (contenuChamp.length); j++) {
+            // Si on trouve un @
             if (contenuChamp.charAt(j) === '@') {
               if (j < (contenuChamp.length - 4)) {
                 for (let k = j; k < (contenuChamp.length - 2); k++) {
+                  // Si il y a un point après @
                   if (contenuChamp.charAt(k) === '.') {
                     bValide = true
                     break
@@ -111,22 +150,28 @@ function verificationChamp (idChamp, contenuChamp = '') {
           }
           bErreur = !bValide
           break
+        }
 
-        case 'date' :
-          let dateValide = Date.parse(contenuChamp)
+        case 'date' : {
+          // Fonction permettant de verifier si la date est valide
+          // converti la date en nombre si elle est valide
+          const dateValide = Date.parse(contenuChamp)
           if (isNaN(dateValide)) {
             bErreur = true
           }
           break
+        }
 
         case 'checkbox' :
           if (!document.getElementById(idChamp).checked) {
             bErreur = true
           }
           break
-        case 'location' :
+        case 'location' : {
           const eLocations = document.getElementsByName('location')
           let bCoche = false
+          // Boucle qui parcourt tous les boutons radios
+          // et qui vérifie si y en a un qui est coché
           for (let j = 0; j < eLocations.length; j++) {
             if (eLocations[j].checked) {
               bCoche = true
@@ -135,8 +180,11 @@ function verificationChamp (idChamp, contenuChamp = '') {
           }
           bErreur = !bCoche
           break
+        }
       }
       if (bErreur) {
+        // S'il n'y a pas déjà une erreur
+        // On crée une erreur et on actualise l'objet
         if (!tErreurs[i].presenceErreur) {
           tErreurs[i].presenceErreur = true
           montreErreur(tErreurs[i])
@@ -153,6 +201,9 @@ function verificationChamp (idChamp, contenuChamp = '') {
   }
 }
 
+// Fonction qui parcourt tout le tableau d'erreurs
+// et qui vérifie si une erreur est présente pour empêcher le formulaire
+// d'être envoyé
 function presenceErreurChamp () {
   let bErreur = false
   for (let i = 0; i < tErreurs.length; i++) {
@@ -163,8 +214,8 @@ function presenceErreurChamp () {
   }
   return bErreur
 }
-
-function verificationFormulaire () {
+// Cette fonction verifie si les champs sont rempli comme voulu
+function verificationFormulaire () { // eslint-disable-line no-unused-vars
   const prenom = document.getElementById('idPrenom')
   const nom = document.getElementById('idNom')
   const email = document.getElementById('idEmail')
@@ -187,7 +238,6 @@ function verificationFormulaire () {
 
 // launch modal form
 function launchModal () {
-  
   modalbg.style.display = 'block'
 }
 
@@ -195,7 +245,7 @@ function launchModal () {
 function closeModal () {
   window.location.reload()
 }
-
+// Fonction qui permet l'affichage d'un message de confirmation
 function afficheMessageConfirmation () {
   const eForm = document.getElementById('idFormReserve')
   const eltParent = eForm.parentElement
@@ -213,4 +263,5 @@ function afficheMessageConfirmation () {
   eBoutonFermer.classList.add('btn-close')
   eBoutonFermer.innerHTML = 'Fermer'
   eltParent.appendChild(eBoutonFermer)
+  btnClose[0].addEventListener('click', closeModal)
 }
