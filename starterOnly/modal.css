@@ -36,7 +36,7 @@ img {
 }
 
 .topnav {
-  overflow: hidden;
+  overflow: visible;
   margin: 3.5%;
 }
 .header-logo {
@@ -77,7 +77,6 @@ img {
   padding-top: 10px;
   color: red;
 }
-
 
 #idFormReserve{
   display: flex;
