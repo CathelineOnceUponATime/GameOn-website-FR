@@ -255,6 +255,7 @@ function afficheMessageConfirmation () {
   // Création de l'élément p pour le message de confirmation d'envoi
   const eMessageConfirmation = document.createElement('p')
   eMessageConfirmation.innerHTML = 'Merci ! Votre réservation a été reçue.'
+  eMessageConfirmation.classList.add('confirmation-message')
   eltParent.appendChild(eMessageConfirmation)
 
   // Création du bouton fermer qui permet de fermer le formulaire
