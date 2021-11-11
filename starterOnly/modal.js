@@ -20,7 +20,7 @@ const tErreurs = []
 
 // Nouvel objet pour chaque erreur
 const ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères pour le prénom', false, 'idPrenomErreur', 'saisie')
-const eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le Nom', false, 'idNomErreur', 'saisie')
+const eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le nom', false, 'idNomErreur', 'saisie')
 const eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
 const eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
 const eConditions = new Erreur('idCheckboxConditions', 'Merci d\'accepter les conditions d\'utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
@@ -255,6 +255,7 @@ function afficheMessageConfirmation () {
   // Création de l'élément p pour le message de confirmation d'envoi
   const eMessageConfirmation = document.createElement('p')
   eMessageConfirmation.innerHTML = 'Merci ! Votre réservation a été reçue.'
+  eMessageConfirmation.classList.add('confirmation-message')
   eltParent.appendChild(eMessageConfirmation)
 
   // Création du bouton fermer qui permet de fermer le formulaire

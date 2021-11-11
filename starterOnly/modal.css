@@ -20,7 +20,9 @@ body {
   max-width: 1300px;
   margin: 0 auto;
 }
-
+.confirmation-message {
+  margin: 350px 0px;
+}
 #logo{
   width: auto;
   height: auto;
@@ -432,7 +434,7 @@ input[data-error]::after {
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
 }
