@@ -57,13 +57,13 @@
             <form name="reserve" action="index.html" method="get" id="idFormReserve">
               <div class="formData" id="idPrenomDiv">
                 <label for="idPrenom">Prénom</label><br>
-                <input class="text-control" type="text" id="idPrenom" name="first" minlength="2"/>
+                <input class="text-control" onkeypress="return /[a-z]/i.test(event.key)" type="text" id="idPrenom" name="first" minlength="2"/>
                 <br>
               </div>
 
               <div class="formData">
                 <label for="idNom">Nom</label> <br>
-                <input class="text-control" type="text" id="idNom" name="last" minlength="2"/>
+                <input class="text-control" onkeypress="return /[a-z]/i.test(event.key)" type="text" id="idNom" name="last" minlength="2"/>
                 <br>
               </div>
 
