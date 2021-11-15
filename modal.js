@@ -23,7 +23,7 @@ const ePrenom = new Erreur('idPrenom', 'Merci de saisir minimum deux caractères
 const eNom = new Erreur('idNom', 'Merci de saisir minimum deux caractères pour le nom', false, 'idNomErreur', 'saisie')
 const eMail = new Erreur('idEmail', 'Merci de saisir une adresse e-mail valide', false, 'idEmailErreur', 'email')
 const eDate = new Erreur('idDate', 'Merci de saisir une date de naissance', false, 'idDateErreur', 'date')
-const eConditions = new Erreur('idCheckboxConditions', 'Merci accepter les conditions utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
+const eConditions = new Erreur('idCheckboxConditions', 'Merci d\'accepter les conditions d\'utilisation', false, 'idCheckboxConditionsErreur', 'checkbox')
 const eLocations = new Erreur('location6', 'Merci de choisir une ville', false, 'idLocationErreur', 'location')
 
 // remplissage du tableau avec chaque erreur
