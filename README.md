@@ -33,7 +33,7 @@ Projet : https://github.com/OpenClassrooms-Student-Center/GameOn-website-FR
 
 - VSCode
 
-### Installing and launching Reservia
+### Installing and launching GameOn
 
 Clone the repository of GameOn :
 
