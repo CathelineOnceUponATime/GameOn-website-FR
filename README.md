@@ -15,12 +15,12 @@
 ## Environments
 
 https://github.com/CathelineOnceUponATime/GameOn-website-FR
-
 https://cathelineonceuponatime.github.io/GameOn-website-FR/
 
 ## Resources provided
 
 Maquette : https://www.figma.com/file/prxFGnSUoEhk6PTcMaJQim/UI-Design-GameOn-EN?node-id=0%3A1
+Projet : https://github.com/OpenClassrooms-Student-Center/GameOn-website-FR
 
 ## Installation
 
