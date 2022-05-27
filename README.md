@@ -15,6 +15,7 @@
 ## Environments
 
 https://github.com/CathelineOnceUponATime/GameOn-website-FR
+
 https://cathelineonceuponatime.github.io/GameOn-website-FR/
 
 ## Resources provided
