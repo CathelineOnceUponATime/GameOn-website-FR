@@ -24,6 +24,8 @@ Maquette : https://www.figma.com/file/prxFGnSUoEhk6PTcMaJQim/UI-Design-GameOn-EN
 
 Projet : https://github.com/OpenClassrooms-Student-Center/GameOn-website-FR
 
+![maquette](https://github.com/CathelineOnceUponATime/GameOn-website-FR/blob/master/starterOnly/GameOn.png)
+
 ## Installation
 
 ### Prerequisites
