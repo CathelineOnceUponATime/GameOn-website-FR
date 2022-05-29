@@ -168,12 +168,12 @@ function verificationChamp (idChamp, contenuChamp = '') {
           }
           break
         case 'location' : {
-          const eLocations = document.getElementsByName('location')
+          const tabLocations = document.getElementsByName('location')
           let bCoche = false
           // Boucle qui parcourt tous les boutons radios
           // et qui vérifie si y en a un qui est coché
-          for (let j = 0; j < eLocations.length; j++) {
-            if (eLocations[j].checked) {
+          for (let j = 0; j < tabLocations.length; j++) {
+            if (tabLocations[j].checked) {
               bCoche = true
               break
             }
