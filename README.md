@@ -18,6 +18,13 @@ https://github.com/CathelineOnceUponATime/GameOn-website-FR
 
 https://cathelineonceuponatime.github.io/GameOn-website-FR/
 
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CathelineOnceUponATime_GameOn-website-FR&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=CathelineOnceUponATime_GameOn-website-FR)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=CathelineOnceUponATime_GameOn-website-FR&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=CathelineOnceUponATime_GameOn-website-FR)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=CathelineOnceUponATime_GameOn-website-FR&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=CathelineOnceUponATime_GameOn-website-FR)  
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=CathelineOnceUponATime_GameOn-website-FR&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=CathelineOnceUponATime_GameOn-website-FR)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=CathelineOnceUponATime_GameOn-website-FR&metric=bugs)](https://sonarcloud.io/summary/new_code?id=CathelineOnceUponATime_GameOn-website-FR)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=CathelineOnceUponATime_GameOn-website-FR&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=CathelineOnceUponATime_GameOn-website-FR)
+
 ## Resources provided
 
 Maquette : https://www.figma.com/file/prxFGnSUoEhk6PTcMaJQim/UI-Design-GameOn-EN?node-id=0%3A1
